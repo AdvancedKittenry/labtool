@@ -25,6 +25,11 @@ Käyttöohjeita:
   - registrations: ilmoittautumiset, sekä nykyiset että menneet
   - users: joskus ilmoittautuneiden käyttäjien tiedot
 
+Asennus:
+
+Asennetaan kuten normaali rails-sovellus.
+Muista ajaa rake bootstrap:all, joka laittaa kantaan oletuskäyttäjän ja kurssin.
+
 Koodin laadunvalvonta:
 
 [![Build Status](https://travis-ci.org/mluukkai/labtool.png)](https://travis-ci.org/mluukkai/labtool)

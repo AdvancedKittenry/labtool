@@ -1,9 +1,8 @@
     namespace :bootstrap do
       desc "Add the default user"
       task :default_user => :environment do
-        User.create :forename=> 'Testi', :surename=> 'Kayttaja', :student_number => "000000007", :email => "admin@admin.admin", :password => "admin"
+        admin = User.create :forename=> 'Testi', :surename=> 'Kayttaja', :student_number => "000000007", :email => "admin@admin.admin", :password => "admin"
         # Hack to make the first user admin
-        admin = User.find(1)
         admin.admin = true
         admin.save
       end

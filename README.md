@@ -29,6 +29,7 @@ Asennus:
 
 Asennetaan kuten normaali rails-sovellus.
 Muista ajaa rake bootstrap:all, joka laittaa kantaan oletuskäyttäjän ja kurssin.
+Oletuskäyttäjän tunnus on "admin@admin.admin" ja salasana on "admin".
 
 Koodin laadunvalvonta:
 

@@ -217,3 +217,7 @@ td {
 #grader h1, #grader .actions {
   display: none; 
 }
+
+#otherlang {
+  display: none;
+}

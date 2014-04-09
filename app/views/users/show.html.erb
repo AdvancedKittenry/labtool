@@ -75,6 +75,8 @@
         <p>Repository: <%= link_to @user.current_registration.repository, @user.current_registration.repository %></p>
 
         <p>Test URL: <%= link_to @user.current_registration.test_url, @user.current_registration.test_url %></p>
+
+        <p>Language: <%= @user.current_registration.language or "Unknown" %></p>
       </div>
 
       <table>

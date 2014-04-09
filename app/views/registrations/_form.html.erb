@@ -50,6 +50,23 @@
     Github repository in form <em>https://github.com/youraccount/yourrepo</em><br/>
     <%= f.text_field :repository %>
   </div>
+  <div class="field" id="langfield">
+    Programming language<br />
+    <input type="radio" name="lang" id="lang_java" value="Java">
+    <label for="lang_java">Java</label>
+    <br />
+    <input type="radio" name="lang" id="lang_php" value="PHP">
+    <label for="lang_php">PHP</label>
+    <br />
+    <input type="radio" name="lang" id="lang_other" value="other">
+    <label for="lang_other">Other</label>
+    
+    <div id="otherlang">
+      What language?
+      <%= f.text_field :language%>
+    </div>
+
+  </div>
 
   <div class="field">
     The test URL of your application. Usually of the form <em>http://username.users.cs.helsinki.fi/tsoha/esittelysivu.html</em> or similar<br/>

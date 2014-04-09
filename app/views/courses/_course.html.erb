@@ -59,6 +59,7 @@
       <th>Topic</th>
       <th>Repository</th>
       <th>Test URL</th>
+      <th>Language</th>
       <th></th>
       <% (1..@course.weeks_total).each do |week| %>
         <th><%= week %></th>
@@ -86,7 +87,8 @@
           <td><%= link_to registration.user, registration.user %></td>
           <td><%= registration.topic %></td>
           <td><%= link_to registration.repository, registration.repository %>&nbsp;&nbsp;</td>
-          <td><%= link_to registration.test_url, registration.test_url %>&nbsp;&nbsp;</td>
+          <td><%= link_to "Test URL", registration.test_url %>&nbsp;&nbsp;</td>
+          <td><%= registration.language or "Unknown"%>&nbsp;&nbsp;</td>
           <td></td>
           <% (1..@course.weeks_total).each do |week| %>
           <td><%= registration.points_for_week week %></td>

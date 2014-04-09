@@ -32,6 +32,16 @@ $(document).ready(function () {
         $(".grade-form").toggle();
     });
 
+    $('#langfield input:radio').change(function() {
+      var lang = $(this).val();
+      if (lang == "other") {
+        $('#otherlang').show().find('input').val("");
+      } else {
+        $('#otherlang').hide().find('input').val(lang);
+      }
+      console.log(lang);
+    });
+
     $('table').rotateTableCellContent();
 
     var activateStudent = function (e){

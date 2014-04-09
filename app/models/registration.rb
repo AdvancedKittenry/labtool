@@ -1,5 +1,5 @@
 class Registration < ActiveRecord::Base
-  attr_accessible :repository, :topic, :test_url, :active, :review1, :review2
+  attr_accessible :repository, :topic, :test_url, :active, :review1, :review2, :language
 
   belongs_to :course
   belongs_to :user

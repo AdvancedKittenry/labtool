@@ -91,12 +91,15 @@ class PeerReviewsController < ApplicationController
 
   def index
     @peer_reviews = PeerReview.current_round_for Course.active
+
     @students = User.select do |s|
       s.current_registration and
       s.current_registration.participates_review(Course.active.review_round) and
       s.current_registration.active
     end
     @students.sort_by!{ |s| s.surename}
+
+    #TODO
     @course = Course.active
 
     @reviewer_candicate = @students.reject{|s| s.reviewer_at_round?(@course.review_round) }
@@ -105,15 +108,57 @@ class PeerReviewsController < ApplicationController
 
   private
 
-  def do_pairing
-    reviewers = User.review_participants.map(&:current_registration).map(&:id)
-    review_targets = User.review_participants.map(&:current_registration).map(&:id).shuffle
-
-    reviewers.inject([]) do |result, reviewer|
-      target = review_targets.first
-      review_targets.slice!(0)
-      result << [reviewer, target]
+  def reviewers_by_language
+    reviewers = User.review_participants.map(&:current_registration).group_by(&:language)
+    
+    # Make sure that all the groups are big enough
+    leftovers = []
+    leftover_languages = []
+    reviewers.reject! do |lang, language_reviewers|
+      if language_reviewers.size < 2
+        leftovers += language_reviewers
+        leftover_languages << lang
+        true
+      else
+        false
+      end
     end
+    
+    # Add fringe languages to their own group or a larger group as needed
+    unless leftovers.empty?
+      leftover_languages = leftover_languages.join(", ")
+      if leftovers.size >= 2
+        reviewers[leftover_languages.gsub(/, ([^,]*)$/, ' and \1')] = leftovers
+      elsif not reviewers.empty?
+        firstgroup = reviewers[reviewers.keys.first]
+        key = reviewers.keys.first or "Unknow language"
+        
+        leftover_languages = key + " and " + leftover_languages
+        
+        reviewers.delete reviewers.keys.first
+        reviewers[leftover_languages] = firstgroup + leftovers 
+      end
+    end
+
+    return reviewers
+  end
+
+  def do_pairing
+    #Group participants by programming language
+
+    result = []
+
+    reviewers_by_language.each do |lang, reviewers|
+      review_targets = reviewers.map(&:id).shuffle
+
+      reviewers.inject(result) do |result, reviewer|
+        target = review_targets.first
+        review_targets.slice!(0)
+        result << [reviewer.id, target]
+      end
+    end
+
+    result
   end
 
   def valid_pairing(pairs, trials)

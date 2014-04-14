@@ -29,6 +29,8 @@
       <% end %>
     </div>
 
+    <% @students_by_language.each do |language, students| %>
+    <h2>Reviews for <%= language or "unkown language" %> students</h2>
     <table class="bordered" style="padding-top: 20px;">
       <thead>
         <th></th>
@@ -71,4 +73,3 @@
     <% end %>
 
 <% end %>
-

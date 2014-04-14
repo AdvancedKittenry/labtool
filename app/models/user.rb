@@ -127,7 +127,8 @@ class User < ActiveRecord::Base
   def self.review_participants
     User.select do |s|
           s.current_registration and
-          s.current_registration.participates_review(Course.active.review_round)
+          s.current_registration.participates_review(Course.active.review_round) and 
+          s.current_registration.active
     end
   end
 end

@@ -19,6 +19,13 @@ class User < ActiveRecord::Base
     "#{forename} #{surename}"
   end
 
+  def name_and_language
+    unless current_registration.nil? or current_registration.language.nil?
+      return "#{forename} #{surename} (#{current_registration.language})"
+    end
+    to_s
+  end
+
   def reviews_at_round(round)
     current_registration.review_targets_for(round).first.reviewed.user
   end

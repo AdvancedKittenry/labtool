@@ -29,8 +29,6 @@
       <% end %>
     </div>
 
-    <% @students_by_language.each do |language, students| %>
-    <h2>Reviews for <%= language or "unkown language" %> students</h2>
     <table class="bordered" style="padding-top: 20px;">
       <thead>
         <th></th>
@@ -42,10 +40,10 @@
       <tbody>
         <% @students.each do |student| %>
           <tr>
-            <td> <%= student %></td>
+            <td> <%= student.name_and_language %></td>
             <td> <%= student.assigned_reviews.count %> </td>
             <td> <%= student.assigned_reviewers.count %> </td>
-            <td> <%= student.reviews_at_round(@course.review_round) if student.assigned_reviews.count>0 %> </td>
+            <td> <%= student.reviews_at_round(@course.review_round).name_and_language if student.assigned_reviews.count>0 %> </td>
             <th>
               <%= form_tag('/remove_review') do %>
                   <%= hidden_field_tag 'reviewer', student.id %>
@@ -63,13 +61,14 @@
     <%= form_for(PeerReview.new) do |f| %>
         <div>
           reviewer:
-          <%= f.select :reviewer_id, options_from_collection_for_select(@reviewer_candicate, :id, :to_s ) %>
+          <%= f.select :reviewer_id, options_from_collection_for_select(@reviewer_candicate, :id, :name_and_language) %>
         </div>
         <div>
           review target:
-          <%= f.select :reviewed_id, options_from_collection_for_select(@review_target_candidate, :id, :to_s ) %>
+          <%= f.select :reviewed_id, options_from_collection_for_select(@review_target_candidate, :id, :name_and_language) %>
         </div>
         <%= f.submit %>
     <% end %>
 
 <% end %>
+
